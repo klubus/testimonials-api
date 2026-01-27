@@ -1,6 +1,7 @@
 const express = require('express');
 const { randomUUID } = require('crypto');
 var cors = require('cors');
+const db = require('./db');
 
 const app = express();
 
@@ -10,26 +11,17 @@ app.use(express.json());
 
 app.use(cors());
 
-const db = [
-  { id: 1, author: 'John Doe', text: 'This company is worth every coin!' },
-  {
-    id: 2,
-    author: 'Amanda Doe',
-    text: 'They really know how to make you happy.',
-  },
-];
-
 app.get('/testimonials', (req, res) => {
-  res.json(db);
+  res.json(db.testimonials);
 });
 
 app.get('/testimonials/random', (req, res) => {
-  const randomIndex = Math.floor(Math.random() * db.length);
-  res.json(db[randomIndex]);
+  const randomIndex = Math.floor(Math.random() * db.testimonials.length);
+  res.json(db.testimonials[randomIndex]);
 });
 
 app.get('/testimonials/:id', (req, res) => {
-  res.json(db.filter((e) => e.id === Number(req.params.id)));
+  res.json(db.testimonials.filter((e) => e.id === Number(req.params.id)));
 });
 
 app.post('/testimonials', (req, res) => {
@@ -45,7 +37,7 @@ app.post('/testimonials', (req, res) => {
     text,
   };
 
-  db.push(newTestimonial);
+  db.testimonials.push(newTestimonial);
 
   res.status(201).json({ message: 'OK' });
 });
@@ -58,12 +50,12 @@ app.put('/testimonials/:id', (req, res) => {
     return res.status(400).json({ message: 'author and text are required' });
   }
 
-  const index = db.findIndex((e) => e.id === id);
+  const index = db.testimonials.findIndex((e) => e.id === id);
   if (index === -1) {
     return res.status(404).json({ message: 'Not found' });
   }
 
-  db[index] = {
+  db.testimonials[index] = {
     id,
     author,
     text,
@@ -74,13 +66,13 @@ app.put('/testimonials/:id', (req, res) => {
 
 app.delete('/testimonials/:id', (req, res) => {
   const id = Number(req.params.id);
-  const index = db.findIndex((e) => e.id === id);
+  const index = db.testimonials.findIndex((e) => e.id === id);
 
   if (index === -1) {
     return res.status(404).json({ message: 'Not found' });
   }
 
-  db.splice(index, 1);
+  db.testimonials.splice(index, 1);
 
   return res.json({ message: 'OK' });
 });

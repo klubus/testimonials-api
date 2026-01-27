@@ -20,6 +20,10 @@ router.route('/seats').post((req, res) => {
       .json({ message: 'day, seat, client and email are required' });
   }
 
+  if (db.seats.some((s) => s.day === Number(day) && s.seat === Number(seat))) {
+    return res.status(403).json({ message: 'The slot is already taken...' });
+  }
+
   const newSeats = {
     id: randomUUID(),
     day,

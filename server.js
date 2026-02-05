@@ -2,6 +2,17 @@ const express = require('express');
 var cors = require('cors');
 const path = require('path');
 const socket = require('socket.io');
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://0.0.0.0:27017/NewWaveDB', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+const db = mongoose.connection;
+db.once('open', () => {
+  console.log('Connected to the database');
+});
+db.on('error', (err) => console.log('Error ' + err));
 
 const app = express();
 

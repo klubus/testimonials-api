@@ -4,10 +4,13 @@ const path = require('path');
 const socket = require('socket.io');
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://0.0.0.0:27017/NewWaveDB', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(
+  'mongodb+srv://klubakrystian:fuvref-nEvbet-wiqbo7@cluster0.cshaz1z.mongodb.net/?appName=Cluster0/NewWaveDB?retryWrites=true&w=majority',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
 const db = mongoose.connection;
 db.once('open', () => {
   console.log('Connected to the database');

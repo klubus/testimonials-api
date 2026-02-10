@@ -3,6 +3,7 @@ var cors = require('cors');
 const path = require('path');
 const socket = require('socket.io');
 const mongoose = require('mongoose');
+const helmet = require('helmet');
 
 mongoose.connect(
   'mongodb+srv://klubakrystian:fuvref-nEvbet-wiqbo7@cluster0.cshaz1z.mongodb.net/?appName=Cluster0/NewWaveDB?retryWrites=true&w=majority',
@@ -18,6 +19,7 @@ db.once('open', () => {
 db.on('error', (err) => console.log('Error ' + err));
 
 const app = express();
+app.use(helmet());
 
 const testimonialsRoutes = require('./routes/testimonials.routes');
 const concertsRoutes = require('./routes/concerts.routes');

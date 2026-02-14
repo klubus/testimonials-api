@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const helmet = require('helmet');
 
 mongoose.connect(
-  'mongodb+srv://klubakrystian:fuvref-nEvbet-wiqbo7@cluster0.cshaz1z.mongodb.net/?appName=Cluster0/NewWaveDB?retryWrites=true&w=majority',
+  'mongodb+srv://klubakrystian:fuvref-nEvbet-wiqbo7@cluster0.cshaz1z.mongodb.net/NewWaveDB?retryWrites=true&w=majority',
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
